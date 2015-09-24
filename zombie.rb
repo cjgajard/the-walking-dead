@@ -3,13 +3,13 @@ class Zombie
 
 	def initialize(name = nil, posx = nil, posy = nil)
 		@name = name || "Comecerebros"
-		@x = posx || Random.rand(5)
-		@y = posy || Random.rand(5)
+		@x = posx || Random.rand($world_width/2)
+		@y = posy || Random.rand($world_height/2)
 	end
 
 	def walk
-		@x = ( @x + Random.rand(-1..1) ) % $map_width
-		@y = ( @y + Random.rand(-1..1) ) % $map_height
+		@x = ( @x + Random.rand(-1..1) ) % $world_width
+		@y = ( @y + Random.rand(-1..1) ) % $world_height
 	end
 
 	#def to_s

@@ -1,44 +1,50 @@
-# 面白い例題
-
-# Un sistema de zombies con posición x,y
-# Cuando los zombies esten cerca de las personas, le advierte
-# Cuando estan al lado, la persona se transforma en zombie
-# 5 Perros que se comen al zombie al atacar
+# READY Un sistema de zombies con posición x,y
+# READY Cuando los zombies esten cerca de las personas, le advierte
+# READY Cuando estan al lado, la persona se transforma en zombie
+# 5 Perros que se comen al zombie al atacar humanos
 # clase arma, esta botada, las personas pueden tomarla; sirve para defenderse del zombie 
 
 require_relative 'persona.rb'
 require_relative 'zombie.rb'
+require_relative 'perro.rb'
 
-$map_width = 24
-$map_height = 24
+$world_width = 32
+$world_height = 32
 
-personas = []
-10.times do |i|
-	personas << Persona.new("Persona #{i+1}")
-end
+dias = 1
+personas = (1..10).map {|i| Persona.new("Persona #{i+1}")}
+zombies = (1..5).map {|i| Zombie.new("Maida #{i+1}")}
+perros = (1..5).map {|i| Perro.new("Perro #{i+1}")}
 
-zombies = []
-5.times do |i|
-	zombies << Zombie.new("Mai #{i+1}")
-end
 
-turnos = 1
+while personas.count > 0 && zombies.count > 0
+	puts "Día #{dias}, Personas: #{personas.count}, Zombies: #{zombies.count}, Perros: #{perros.count}"
 
-until personas.count == 0
-	puts "Día #{turnos}, Personas: #{personas.count}, Zombies: #{zombies.count}"
 	zombies.each(&:walk)
-	#personas.each(&:walk)
+
+	perros.each do |perro|
+		perro.walk
+		perros.delete(perro) if perro.killed_by? zombies
+	end
+
 	personas.each do |p|
 		p.walk
-		if p.killed_by? zombies
-			personas.delete(p).name
+		p.meet? perros
+		if p.zombified_by? zombies
+			personas.delete(p)
 			zombies << Zombie.new(p.name)
 		end
 	end
-	turnos += 1
+
+	dias += 1
 	#input = gets
 	puts "\n\n\n"
 end
 
-puts "GAME OVER"
-puts " La humanidad ha sido aniquilada en #{turnos} días"
+if personas.count == 0
+	puts "GAME OVER"
+	puts " La humanidad ha sido aniquilada en #{dias} días"
+else
+	puts "VICTORY!"
+	puts " #{personas.count} personas y #{perros.count} perros han sobrevivido a #{dias} días de epidemia"
+end
