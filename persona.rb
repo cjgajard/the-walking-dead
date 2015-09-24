@@ -1,5 +1,6 @@
 class Persona
 	attr_reader :name, :x, :y
+	attr_accessor :perro
 
 	def initialize(name = nil, posx = nil, posy = nil)
 		@name = name || "John Doe"
@@ -33,9 +34,12 @@ class Persona
 				puts " ¡Cuidado, #{@name}! ¡#{zombie.name} está cerca!"
 			elsif beside? zombie
 				dangerous_zombies += 10
-				if @perro && dangerous_zombies >= 20 
+				if @perro && dangerous_zombies < 30
 					puts " #{@name}, #{@perro.name} te ha defendido matando a #{zombie.name}"
 				else
+					if dangerous_zombies >= 30
+						puts " #{@name}, #{@perro.name} te ha intentado defender de #{zombie.name}, pero ha sido asesinado"
+					end
 					puts " #{@name} ha sido convertido en zombie por #{zombie.name}"
 					return true
 				end

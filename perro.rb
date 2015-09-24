@@ -25,7 +25,7 @@ class Perro
 
 	def killed_by?(zombies)
 		zombies.each do |zombie|
-			if @owner && beside?(zombie)
+			if @owner.nil? && beside?(zombie)
 				puts " #{@name} ha sido asesinado por #{zombie.name}"
 				return true
 			end
