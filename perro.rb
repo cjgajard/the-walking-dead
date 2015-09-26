@@ -1,14 +1,14 @@
 class Perro < Creature
   @@group = []
   def self.group
-    @@group
+    @@group.compact
   end
   def self.group=(new_group)
     @@group = new_group
   end
 
   def self.total
-    @@group.size
+    @@group.compact.size
   end
 
   attr_accessor :owner
@@ -31,17 +31,17 @@ class Perro < Creature
   def killed_by?(zombies)
     zombies.each do |zombie|
       if @owner.nil? && beside?(zombie)
-        puts " :#{@name} ha sido asesinado por #{zombie.name}"
+        puts "  #{@name} ha sido asesinado por #{zombie.name}"
         @@group[@@group.index(self)] = nil
         break
       end
     end
   end
 
-  def attack(zombie)
-    if @owner && @owner.attacking_zombies <= 2
-      puts " >  #{@name} te ha defendido matando a #{zombie.name}"
-      puts " >  Has dejado de ser dueño de #{@name}"
+  def attack?(zombie)
+    if @owner
+      puts "  : #{@name} te ha defendido matando a #{zombie.name}"
+      puts "  : Has dejado de ser dueño de #{@name}"
       @owner = nil
       return true
     else

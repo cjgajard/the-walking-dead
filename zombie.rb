@@ -1,14 +1,14 @@
 class Zombie < Creature
   @@group = []
   def self.group
-    @@group
+    @@group.compact
   end
   def self.group=(new_group)
     @@group = new_group
   end
 
   def self.total
-    @@group.size
+    @@group.compact.size
   end
   
   def initialize(name = nil, posx = nil, posy = nil)
@@ -25,9 +25,11 @@ class Zombie < Creature
 
   def kill?(person)
     if beside? person
-      if person.perro && person.perro.attack?(self)
+      person.attacking_zombies += 1
+      if (person.weapon && person.weapon.headshot?(self)) \
+      || (person.perro && person.perro.attack?(self))
+        puts "  : Mataste a #{@name}"
         @@group[@@group.index(self)] = nil
-        return false
       else
         person.zombified_by self
         @@group << Zombie.new(person.name)
