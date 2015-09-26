@@ -30,13 +30,12 @@ class Zombie < Creature
       || (person.dog && person.dog.attack?(self))
         puts "  : Mataste a #{@name}"
         @@group[@@group.index(self)] = nil
+        return false
       else
         person.zombified_by self
         @@group << Zombie.new(person.name)
         return true
       end
-    else
-      return false
     end
   end
 end

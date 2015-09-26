@@ -32,8 +32,9 @@ class Dog < Creature
     if @owner.nil? && beside?(zombie)
       puts "  #{@name} ha sido asesinado por #{zombie.name}"
       @@group[@@group.index(self)] = nil
-      break
+      return true
     end
+    false
   end
 
   def attack?(zombie)

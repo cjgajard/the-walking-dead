@@ -6,9 +6,9 @@ require_relative 'Weapon.rb'
 
 MAP = [20,20]
 
-Person.group = (1..5).map {|i| Person.new}
-Zombie.group = (1..20).map {|i| Zombie.new}
-Dog.group = (1...2).map {|i| Dog.new}
+Person.group = (1..10).map {|i| Person.new}
+Zombie.group = (1..10).map {|i| Zombie.new}
+Dog.group = (1...5).map {|i| Dog.new}
 Weapon.group = (1..10).map {|i| Gun.new}
 # Weapon.group << (1..10).map {|i| Sword.new}
 
@@ -21,11 +21,11 @@ while Person.total > 0 && Zombie.total > 0
 
   Dog.group.each do |dog|
     dog.walk 3
-    Zombie.group.each { |zombie| dog.killed_by zombie }
+    Zombie.group.each { |zombie| break if dog.killed_by?(zombie) }
   end
 
   Person.group.each do |person|
-    puts "  #{p}"
+    puts "  #{person}"
     person.walk 2
     Dog.group.each { |dog| person.meet? dog }
     Weapon.group.each { |weapon| person.found? weapon}
@@ -35,7 +35,7 @@ while Person.total > 0 && Zombie.total > 0
       break if killed
       zombie_presence = true if person.danger? zombie
     end
-    if (!zombie_presence && p.attacking_zombies == 0)
+    if (!zombie_presence && person.attacking_zombies == 0)
       puts "  : Todo está tranquilo por aquí"
     end
   end
