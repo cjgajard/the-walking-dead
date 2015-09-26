@@ -1,4 +1,4 @@
-class Persona < Creature
+class Person < Creature
   @@group = []
   def self.group
     @@group.compact
@@ -11,11 +11,11 @@ class Persona < Creature
     @@group.compact.size
   end
 
-  attr_accessor :perro, :attacking_zombies, :weapon
+  attr_accessor :dog, :attacking_zombies, :weapon
   def initialize(name = nil, posx = nil, posy = nil)
     super
     @name = name || "Persona #{@@group.size+1}"
-    @perro, @weapon = nil, nil
+    @dog, @weapon = nil, nil
     @attacking_zombies = 0
     @@group << self
   end
@@ -38,11 +38,11 @@ class Persona < Creature
     @@group[@@group.index(self)] = nil
   end
 
-  def meet?(perro)
-    if @perro.nil? && perro.owner.nil? && beside?(perro)
-      @perro = perro
-      perro.owner = self
-      puts "  : Has adoptado a #{@perro.name}"
+  def meet?(dog)
+    if @dog.nil? && dog.owner.nil? && beside?(dog)
+      @dog = dog
+      dog.owner = self
+      puts "  : Has adoptado a #{@dog.name}"
     end
   end
 

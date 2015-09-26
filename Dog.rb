@@ -1,4 +1,4 @@
-class Perro < Creature
+class Dog < Creature
   @@group = []
   def self.group
     @@group.compact
@@ -14,7 +14,7 @@ class Perro < Creature
   attr_accessor :owner
   def initialize(name = nil, posx = nil, posy = nil)
     super
-    @name = name || "Dog #{@@group.size+1}"
+    @name = name || "Perro #{@@group.size+1}"
     @owner = nil
     @@group << self
   end
@@ -28,13 +28,11 @@ class Perro < Creature
     end
   end
 
-  def killed_by?(zombies)
-    zombies.each do |zombie|
-      if @owner.nil? && beside?(zombie)
-        puts "  #{@name} ha sido asesinado por #{zombie.name}"
-        @@group[@@group.index(self)] = nil
-        break
-      end
+  def killed_by?(zombie)
+    if @owner.nil? && beside?(zombie)
+      puts "  #{@name} ha sido asesinado por #{zombie.name}"
+      @@group[@@group.index(self)] = nil
+      break
     end
   end
 

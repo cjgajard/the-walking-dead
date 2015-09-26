@@ -26,8 +26,8 @@ class Zombie < Creature
   def kill?(person)
     if beside? person
       person.attacking_zombies += 1
-      if (person.weapon && person.weapon.headshot?(self)) \
-      || (person.perro && person.perro.attack?(self))
+      if (person.weapon && person.weapon.kill?(self)) \
+      || (person.dog && person.dog.attack?(self))
         puts "  : Mataste a #{@name}"
         @@group[@@group.index(self)] = nil
       else

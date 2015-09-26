@@ -35,4 +35,5 @@ class Gun < Weapon
 		end
 		return false
 	end
+	alias_method :headshot?, :kill?
 end
