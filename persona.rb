@@ -27,15 +27,15 @@ class Persona < Creature
   def danger?(zombie)
     if close_to? zombie
       puts " >  ¡Cuidado! ¡#{zombie.name} está cerca!" 
-      true
+      return true
     else
-      false
+      return false
     end
   end
 
   def zombified_by(zombie)
     puts " >  Ha sido convertido en zombie por #{zombie.name}"
-    @@group.delete(self)
+    @@group[@@group.index(self)] = nil
   end
 
   def meet?(perro)

@@ -3,13 +3,12 @@ require_relative 'persona.rb'
 require_relative 'zombie.rb'
 require_relative 'perro.rb'
 
-$world_width = 20
-$world_height = 20
 
-pers = 5
-Persona.group = (1..pers).map {|i| Persona.new}
-Zombie.group = (1..10).map {|i| Zombie.new}
-Perro.group = (1..3).map {|i| Perro.new}
+MAP = [20,20]
+
+Persona.group = (1..5).map {|i| Persona.new}
+Zombie.group = (1..20).map {|i| Zombie.new MAP}
+Perro.group = (1..3).map {|i| Perro.new MAP}
 
 dias = 0
 while Persona.total > 0 && Zombie.total > 0
@@ -19,13 +18,13 @@ while Persona.total > 0 && Zombie.total > 0
   Zombie.group.each(&:walk)
 
   Perro.group.each do |perro|
-    perro.walk
+    perro.walk 3
     perro.killed_by? Zombie.group
   end
 
   Persona.group.each do |p|
     puts " :#{p}"
-    p.walk
+    p.walk 2
     Perro.group.each { |perro| p.meet? perro }
     zombie_presence, killed, p.attacking_zombies = false, false, 0
     Zombie.group.each do |zombie|
@@ -37,6 +36,10 @@ while Persona.total > 0 && Zombie.total > 0
       puts " >  Todo está tranquilo por aquí\n"
     end
   end
+  Persona.group.compact!
+  Zombie.group.compact!
+  
+
   #input = gets
   puts ""
 end
@@ -46,3 +49,8 @@ if Persona.total == 0
 else
   puts "VICTORY!\n #{Persona.total} personas y #{Perro.total} perros han sobrevivido a #{dias} días de epidemia"
 end
+
+
+main = Main.new
+
+main.init

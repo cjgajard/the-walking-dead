@@ -19,7 +19,7 @@ class Perro < Creature
     @@group << self
   end
 
-  def walk(step=1)
+  def walk(step=3)
     if @owner
       @x = @owner.x
       @y = @owner.y
@@ -32,9 +32,20 @@ class Perro < Creature
     zombies.each do |zombie|
       if @owner.nil? && beside?(zombie)
         puts " :#{@name} ha sido asesinado por #{zombie.name}"
-        @@group.delete(self)
+        @@group[@@group.index(self)] = nil
         break
       end
+    end
+  end
+
+  def attack(zombie)
+    if @owner && @owner.attacking_zombies <= 2
+      puts " >  #{@name} te ha defendido matando a #{zombie.name}"
+      puts " >  Has dejado de ser dueño de #{@name}"
+      @owner = nil
+      return true
+    else
+      return false
     end
   end
 
