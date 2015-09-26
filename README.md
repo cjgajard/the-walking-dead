@@ -1,4 +1,4 @@
-# The Rubying Dead
+# The Rubying Walking Dead
 DesafioLatam G2-Santiago Ruby Exercise.
 
 ## Instructions
@@ -9,6 +9,3 @@ DesafioLatam G2-Santiago Ruby Exercise.
 
 ## Known issues
 1. Sometimes checks a already dead zombie's attack
-
-## Copyleft
-To use this code, just don't use privative copyright :)
