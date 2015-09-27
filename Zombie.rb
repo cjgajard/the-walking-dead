@@ -33,7 +33,7 @@ class Zombie < Creature
         return false
       else
         person.zombified_by self
-        @@group << Zombie.new(person.name)
+        Zombie.new(person.name) # Zombie.new() automatically add new zombie to Zombie.group!!
         return true
       end
     end

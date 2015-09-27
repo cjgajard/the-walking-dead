@@ -6,6 +6,3 @@ DesafioLatam G2-Santiago Ruby Exercise.
 2. Add a Dog class, it has to kill a zombie when it's close to a person and a zombie.
 3. Add a Weapon class, people can take this weapon when they are in the same position. If a zombie get close to a armed person, he/she can kill the zombie.
 4. (jCrip special) When shooting a gun, people has 3 chances to headshot the zombie, otherwise the zombie won't die.
-
-## Known issues
-1. Sometimes checks a already dead zombie's attack

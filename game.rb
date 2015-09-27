@@ -6,10 +6,10 @@ require_relative 'Weapon.rb'
 
 MAP = [20,20]
 
-Person.group = (1..10).map {|i| Person.new}
-Zombie.group = (1..10).map {|i| Zombie.new}
-Dog.group = (1...5).map {|i| Dog.new}
-Weapon.group = (1..10).map {|i| Gun.new}
+Person.group = (1..5).map {|i| Person.new}
+Zombie.group = (1..5).map {|i| Zombie.new}
+Dog.group = (1...2).map {|i| Dog.new}
+Weapon.group = (1..5).map {|i| Gun.new}
 # Weapon.group << (1..10).map {|i| Sword.new}
 
 dias = 0
