@@ -1,51 +1,38 @@
-require_relative 'Creature.rb'
-require_relative 'Person.rb'
-require_relative 'Zombie.rb'
-require_relative 'Dog.rb'
-require_relative 'Weapon.rb'
+require_relative 'person.rb'
+require_relative 'zombie.rb'
+require_relative 'dog.rb'
+require_relative 'weapon.rb'
 
 MAP = [20,20]
 
-Person.group = (1..5).map {|i| Person.new}
-Zombie.group = (1..5).map {|i| Zombie.new}
-Dog.group = (1...2).map {|i| Dog.new}
-Weapon.group = (1..5).map {|i| Gun.new}
-# Weapon.group << (1..10).map {|i| Sword.new}
+5.times do |i|
+  Dog.new if i < 2
+  Person.new
+  Zombie.new
+  Gun.new
+  # Weapon.group << (1..10).map {|i| Sword.new}
+end
 
 dias = 0
 while Person.total > 0 && Zombie.total > 0
   dias += 1
   puts "Día #{dias}, Personas: #{Person.total}, Zombies: #{Zombie.total}, Perros: #{Dog.total}"
 
-  Zombie.group.each(&:walk)
-
-  Dog.group.each do |dog|
-    dog.walk 3
-    Zombie.group.each { |zombie| break if dog.killed_by?(zombie) }
+  Creature.list.each do |c|
+    puts "\t#{c}"
+    print "\t\t* Moved from #{c.location}"
+    c.walk
+    puts " to #{c.location}"
+    c.check
+    Creature.list.each { |c2| c.attack c2 }
   end
 
-  Person.group.each do |person|
-    puts "  #{person}"
-    person.walk 2
-    Dog.group.each { |dog| person.meet? dog }
-    Weapon.group.each { |weapon| person.found? weapon}
-    zombie_presence, killed, person.attacking_zombies = false, false, 0
-    Zombie.group.each do |zombie|
-      killed = zombie.kill? person
-      break if killed
-      zombie_presence = true if person.danger? zombie
-    end
-    if (!zombie_presence && person.attacking_zombies == 0)
-      puts "  : Todo está tranquilo por aquí"
-    end
-  end
-
-  #input = gets
-  puts ''
+  # input = gets
+  # break if input =~ /exit/i
 end
 
-if Person.total == 0
+if Person.total == 0 && Zombie.total > 0
   puts "GAME OVER.\n  La humanidad ha sido aniquilada en #{dias} días"
-else
+elsif Person.total > 0 && Zombie.total == 0
   puts "VICTORY!\n  #{Person.total} personas y #{Dog.total} perros han sobrevivido a #{dias} días de epidemia"
 end
